@@ -8,6 +8,16 @@ class TasksController < ApplicationController
     
     def show
         @task = Task.find_by(id: params['id'])
-        render json: {task: @task, comments: @task.comments.to_a}
+        @comments = @task.comments.collect do |comment| 
+            {
+                author: comment.author.username,
+                author_id: comment.author.id,
+                content: comment.content,
+                created_at: comment.created_at,
+                task_id: comment.task_id,
+                id: comment.id
+            }
+        end
+        render json: {task: @task, comments: @comments}
     end
 end
