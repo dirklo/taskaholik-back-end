@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :tasks
   resources :details
+  post '/details/:id/complete', to: 'details#complete' 
   resources :task_comments
   resources :detail_comments
   devise_for :users, path: '', path_names: {

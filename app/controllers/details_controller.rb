@@ -20,4 +20,15 @@ class DetailsController < ApplicationController
         end
         render json: {detail: @detail, comments: @comments}
     end
+
+    def complete 
+        @detail = Detail.find_by(id: params['id'])
+        @detail.completed = true
+        if @detail.save
+            render json: {message: 'Detail Completed', status: 200}
+        else
+            render json: {message: 'An Error Occured', status: 401}
+        end
+    end
+
 end
