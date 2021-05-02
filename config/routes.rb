@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :tasks
   resources :details
   resources :task_comments
+  resources :detail_comments
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
     sign_out: 'logout',

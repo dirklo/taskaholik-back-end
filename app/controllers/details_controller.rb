@@ -3,18 +3,21 @@ class DetailsController < ApplicationController
 
     def index
         @task = Task.find_by(id: params['taskId'])
-        result = []
-        @task.details.each do |detail|
-            @comments = detail.comments.collect do |comment| 
-                {
-                    author: comment.author.username,
-                    content: comment.content,
-                    created_at: comment.created_at,
-                    detail_id: comment.detail_id
-                }
-            end
-            result << { detail: detail, comments: @comments.to_a }
+        render json: @task.details
+    end
+
+    def show
+        @detail = Detail.find_by(id: params['id'])
+        @comments = @detail.comments.collect do |detail| 
+            {
+                author: detail.author.username,
+                author_id: detail.author.id,
+                content: detail.content,
+                created_at: detail.created_at,
+                detail_id: detail.detail_id,
+                id: detail.id
+            }
         end
-        render json: result
+        render json: {detail: @detail, comments: @comments}
     end
 end
