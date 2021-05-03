@@ -21,13 +21,33 @@ class DetailsController < ApplicationController
         render json: {detail: @detail, comments: @comments}
     end
 
-    def complete 
+    def create
+        @detail = Detail.new(content: params['content'], task_id: params['task_id'])
+        if @detail.save
+            render json: {message: 'Added Successfully', status: 200, detail: @detail}
+        else
+            render json: {message: 'Something Went Wrong!', status: 401}
+        end
+    end
+
+    def destroy
         @detail = Detail.find_by(id: params['id'])
-        @detail.completed = true
+        if @detail.destroy 
+            render json: {message: 'Deleted Successfully', status: 200}
+        else
+            render json: {message: 'Something went wrong!', status: 401}
+        end
+    end
+
+
+    def complete 
+        @detail = Detail.find_by(id: params['id'])       
+        @detail.completed = true if params['status'] == 'complete'
+        @detail.completed = false if params['status'] == 'incomplete'
         if @detail.save
             render json: {message: 'Detail Completed', status: 200}
         else
-            render json: {message: 'An Error Occured', status: 401}
+            render json: {message: 'Something went wrong!', status: 401}
         end
     end
 
