@@ -20,4 +20,15 @@ class TasksController < ApplicationController
         end
         render json: {task: @task, comments: @comments}
     end
+
+    def create
+        @project = Project.find_by(id: params['project_id'])
+        @task = @project.tasks.new(title: params['title'], creator_id: params['creator_id'])
+
+        if @task.save
+            render json: {message: 'Added Successfully', status: 200, task: @task}
+        else
+            render json: {message: 'Something Went Wrong!', status: 401}
+        end
+    end
 end

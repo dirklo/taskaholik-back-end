@@ -22,7 +22,8 @@ class DetailsController < ApplicationController
     end
 
     def create
-        @detail = Detail.new(content: params['content'], task_id: params['task_id'])
+        @task = Task.find_by(id: params['task_id'])
+        @detail = @task.details.new(content: params['content'], creator_id: params['creator_id'])
         if @detail.save
             render json: {message: 'Added Successfully', status: 200, detail: @detail}
         else
