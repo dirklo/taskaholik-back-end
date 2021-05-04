@@ -31,4 +31,13 @@ class TasksController < ApplicationController
             render json: {message: 'Something Went Wrong!', status: 401}
         end
     end
+
+    def destroy
+        @task = Task.find_by(id: params[:id])
+        if @task.destroy
+            render json: {message: 'Successfully Deleted', status: 200}
+        else
+            render json: {message: 'Something Went Wrong!', status: 401}
+        end
+    end
 end
