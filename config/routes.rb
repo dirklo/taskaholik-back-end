@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :projects
   resources :tasks
   resources :details
+  resources :memberships
+  delete '/memberships', to: 'memberships#destroy'
   post '/details/:id/complete', to: 'details#complete' 
   resources :task_comments
   resources :detail_comments

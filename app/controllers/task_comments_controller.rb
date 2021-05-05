@@ -12,8 +12,9 @@ class TaskCommentsController < ApplicationController
     end
 
     def destroy
-        @task_comment = TaskComment.find_by(id: task_comment_params[:task_id])
-        if @task_comment.destroy
+        @task_comment = TaskComment.find_by(id: params[:id])
+        @user = User.find_by(id: task_comment_params[:user_id])
+        if @task_comment.destroy && @user == @task_comment.author
             render json: "Comment Successfully Deleted", status: 200
         else
             render json: "Something Went Wrong", status: 500
