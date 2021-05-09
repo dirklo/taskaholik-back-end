@@ -5,6 +5,7 @@ class CreateDetails < ActiveRecord::Migration[6.1]
       t.integer :task_id
       t.integer :creator_id
       t.boolean :completed, :default => false
+      t.datetime :deadline
 
       t.timestamps
     end

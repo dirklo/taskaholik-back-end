@@ -18,6 +18,6 @@ respond_to :json
 
     private
         def project_params
-            params.require(:project).permit(:title, :creator_id, :team_id)
+            params.require(:project).permit(:title, :creator_id, :team_id, :deadline)
         end
 end

@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2021_04_28_140705) do
     t.integer "task_id"
     t.integer "creator_id"
     t.boolean "completed", default: false
+    t.datetime "deadline"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_04_28_140705) do
     t.string "title"
     t.integer "creator_id"
     t.integer "team_id"
+    t.datetime "deadline"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

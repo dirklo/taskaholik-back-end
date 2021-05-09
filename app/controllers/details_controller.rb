@@ -27,7 +27,7 @@ class DetailsController < ApplicationController
         if @detail.save
             render json: {message: 'Added Successfully', status: 200, detail: @detail}
         else
-            render json: {message: 'Something Went Wrong!', status: 401}
+            render json: {message: 'Something Went Wrong!', status: 500}
         end
     end
 
@@ -36,20 +36,24 @@ class DetailsController < ApplicationController
         if @detail.destroy 
             render json: {message: 'Deleted Successfully', status: 200}
         else
-            render json: {message: 'Something went wrong!', status: 401}
+            render json: {message: 'Something went wrong!', status: 500}
         end
     end
 
 
     def complete 
         @detail = Detail.find_by(id: params['id'])       
-        @detail.completed = true if params['status'] == 'complete'
-        @detail.completed = false if params['status'] == 'incomplete'
+        @detail.completed = !params['status']
+        
         if @detail.save
             render json: {message: 'Detail Completed', status: 200}
         else
-            render json: {message: 'Something went wrong!', status: 401}
+            render json: {message: 'Something went wrong!', status: 500}
         end
     end
 
+    private
+        def detail_params
+            params.require(:detail).permit(:content, :creator_id, :task_id, :deadline)
+        end
 end
