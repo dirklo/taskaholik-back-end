@@ -1,5 +1,6 @@
 class TasksController < ApplicationController
     respond_to :json
+    # before_action :authenticate_user!
     
     def index
         @project = Project.find_by(id: params['projectId'])
