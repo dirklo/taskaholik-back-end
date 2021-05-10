@@ -18,7 +18,7 @@ class DetailsController < ApplicationController
                 id: detail.id
             }
         end
-        render json: {detail: @detail, comments: @comments}
+        render json: {detail: @detail, comments: @comments, assignees: @detail.assignees.to_a}
     end
 
     def create
