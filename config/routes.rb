@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   resources :memberships
   delete '/memberships', to: 'memberships#destroy'
   post '/details/:id/complete', to: 'details#complete' 
+  resources :assignments
+  delete '/assignments', to: 'assignments#destroy'
   resources :task_comments
   resources :detail_comments
   devise_for :users, path: '', path_names: {
