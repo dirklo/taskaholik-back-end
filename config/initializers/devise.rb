@@ -266,10 +266,9 @@ Devise.setup do |config|
   config.navigational_formats = []
 
   config.jwt do |jwt|
-    #development
+
     jwt.secret = ENV['SECRET_KEY_BASE'] || Rails.application.credentials.secret_key_base
-    #production
-    # jwt.secret = ENV['SECRET_KEY_BASE']
+  
     jwt.request_formats = {
       landlord: [nil, :json]
     }
