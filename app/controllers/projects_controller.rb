@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-respond_to :json
+    respond_to :json
     
     def index
         @team = Team.find_by(id: params['teamId']) 
@@ -9,15 +9,27 @@ respond_to :json
     def create
         @project = Project.new(project_params)
         if @project.save
-            render json: {message: 'Project successfully saved', status: 200, project: @project}
+            render json: {message: 'Project successfully saved', project: @project}, status: 200
         else
-            render json: {message: 'Something went wrong!', status: 500}
+            render json: {message: @project.errors.full_messages[0]}, status: 500
+        end 
+    end
+
+    def destroy
+        @project = Project.find_by(id: params[:id])
+        if current_user == @project.team.leader || current_user == @project.creator
+            if @project.destroy
+                render json: {message: 'Project successfully deleted'}, status: 200
+            else
+                render json: {message: @project.errors.full_messages[0]}, status: 500
+            end
+        else
+            render json: {message: 'You are not authorized to do that.'}, status: 500
         end
-        
     end
 
     private
         def project_params
-            params.require(:project).permit(:title, :creator_id, :team_id, :deadline)
+            params.require(:project).permit(:title, :creator_id, :team_id, :deadline, :user_id)
         end
 end

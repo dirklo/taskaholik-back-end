@@ -1,5 +1,6 @@
 class DetailCommentsController < ApplicationController
     respond_to :json
+    before_action :authenticate_user!
 
     def index
         @detail = Detail.find_by(id: params['detail_id'])
@@ -15,9 +16,9 @@ class DetailCommentsController < ApplicationController
         @detail_comment = DetailComment.find_by(id: params[:id])
         @user = User.find_by(id: detail_comment_params['user_id'])
         if @detail_comment.destroy
-            render json: "Comment Successfully Deleted", status: 200
+            render json: {message: "Comment successfully deleted"}, status: 200
         else
-            render json: "Something Went Wrong", status: 500
+            render json: {message: "Something went wrong. Comment not deleted."}, status: 500
         end
     end
 
