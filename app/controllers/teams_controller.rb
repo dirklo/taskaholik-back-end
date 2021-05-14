@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
     respond_to :json
+    before_action :authenticate_user!, only: [:update]
 
     def index
         @user = User.find_by(id: params["userId"])
@@ -33,8 +34,17 @@ class TeamsController < ApplicationController
         end
     end
 
+    def update
+        @team = Team.find_by(id: params[:id])
+        if @team.update(team_params)
+            render json: {team: @team, message: "team updated"}, status: 200
+        else
+            render json: {message: @team.errors.full_messages[0]}, status: 500
+        end
+    end
+
     private
         def team_params
             params.require(:team).permit(:name, :user_id)
-        end
+        end 
 end

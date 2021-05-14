@@ -28,21 +28,36 @@ class DetailsController < ApplicationController
 
     def create
         @task = Task.find_by(id: params['task_id'])
-        @detail = @task.details.new(content: params['content'], creator_id: params['creator_id'])
+        @detail = @task.details.new(detail_params)
         if @detail.save
             render json: {message: 'Added Successfully', detail: @detail}, status: 200
         else
-            render json: {message: 'Something Went Wrong!'}, status: 500
+            render json: {message: @detail.errors.full_messages[0]}, status: 500
+        end
+    end
+
+    def update
+        @detail = Detail.find_by(id: params[:id])
+        if @detail.update(detail_params)
+            render json: {detail: @detail, message: "detail updated"}, status: 200
+        else
+            render json: {message: @detail.errors.full_messages[0]}, status: 500
         end
     end
 
     def destroy
         @detail = Detail.find_by(id: params['id'])
-        if @detail.destroy 
-            render json: {message: 'Deleted Successfully'}, status: 200
+        if current_user == @detail.creator || 
+            current_user == @detail.task.project.team.leader 
+            if @detail.destroy 
+                render json: {message: 'Deleted Successfully'}, status: 200
+            else
+                render json: {message: 'Something went wrong!'}, status: 500
+            end
         else
-            render json: {message: 'Something went wrong!'}, status: 500
+            render json: {message: 'You are not authorized to do that.'}, status: 500
         end
+
     end
 
 

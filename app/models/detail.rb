@@ -4,4 +4,5 @@ class Detail < ApplicationRecord
     belongs_to :creator, class_name: "User"
     has_many :assignments
     has_many :assignees, through: :assignments, source: :user
+    validates :content, presence: true
 end
