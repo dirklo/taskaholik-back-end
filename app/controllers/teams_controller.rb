@@ -24,6 +24,15 @@ class TeamsController < ApplicationController
         render json: @teams
     end
 
+    def show 
+        @team = Team.find_by(id: params[:id])
+        @members = @team.members
+        @projects = @team.projects
+        @tasks = @team.tasks
+        @details = @team.details
+        render json: {members: @members, projects: @projects, tasks: @tasks, details: @details}
+    end
+
     def create
         @user = User.find_by(id: team_params[:user_id])
         @team = Team.new(name: team_params[:name], leader: @user)

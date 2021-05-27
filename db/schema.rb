@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2021_05_10_054002) do
     t.integer "creator_id"
     t.boolean "completed", default: false
     t.datetime "deadline"
+    t.datetime "optional"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -91,6 +92,10 @@ ActiveRecord::Schema.define(version: 2021_05_10_054002) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.integer "selected_team"
+    t.integer "selected_project"
+    t.integer "selected_task"
+    t.integer "selected_detail"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "jti", null: false
