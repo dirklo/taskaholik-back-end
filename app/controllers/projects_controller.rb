@@ -8,7 +8,10 @@ class ProjectsController < ApplicationController
 
     def create
         @project = Project.new(project_params)
+        @user = User.find_by(id: project_params[:creator_id])
         if @project.save
+            @user.selected_project = @project.id
+            @user.save
             render json: {message: 'Project successfully saved', project: @project}, status: 200
         else
             render json: {message: @project.errors.full_messages[0]}, status: 500
