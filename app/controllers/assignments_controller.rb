@@ -1,5 +1,13 @@
 class AssignmentsController < ApplicationController
     before_action :authenticate_user!
+    
+    def index
+        @detail = Detail.find_by(id: params[:detail_id])
+        @assignees = @detail.assignments.map do |assignment| 
+            assignment.user
+        end 
+        render json: @assignees, status: 200
+    end 
 
     def create
         if !Assignment.find_by(assignment_params)
