@@ -8,7 +8,7 @@
 
 -designed to be used with this front end repo:
 
-- https://github.com/dirklo/taskaholik-front-end
+- https://github.com/rick-moore/taskaholik-front-end
 
 ## Deployed API on Heroku:
 -'https://taskaholik-back-end.herokuapp.com' 
